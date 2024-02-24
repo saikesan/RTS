@@ -1,0 +1,7 @@
+bin/
+out/
+*.dll
+*.lib
+*.exe
+*.log
+.vs/
