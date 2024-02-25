@@ -10,10 +10,6 @@
  * 10. Разработать программу, осуществляющую подсчет количества символов 
  * русского алфавита в файле. Чтение файла должно осуществляться параллельно 
  * подсчету. Процесс программы должен состоять из одной нити.
- * 
- * 19. Имеется 2 клиента и 1 сервер. Необходимо осуществлять передачу данных 
- * от клиентов к серверу через один и тот же буфер в разделяемой памяти. 
- * Синхронизация с использованием семафоров.
  */
 
 
@@ -123,7 +119,7 @@ int main()
 
 
 	DWORD currentRead = 0;	  // Количество реально прочитанных байтов в функии ReadFile.
-	DWORD ruSymbolsCount = 0; // Количество символов русского алфавита.
+	LONGLONG ruSymbolsCount = 0; // Количество символов русского алфавита.
 
 	// Если размер файла меньше 65537, то и читать будем по размеру файла, а не блок в 65337 байт.
 	if (fileSize.QuadPart < static_cast<LONGLONG>(blockSize))
@@ -168,7 +164,7 @@ int main()
 	{
 		// Подсчет символов русского алфавита.
 		ruSymbolsCount = CountingRuSymbols(readingBuffer, currentRead);
-		printf("Count of russian symbols: %d\n", ruSymbolsCount);
+		printf("Count of russian symbols: %I64u\n", ruSymbolsCount);
 
 		return 0;
 	}
@@ -255,7 +251,7 @@ int main()
 		ol.OffsetHigh = bytesReaded.HighPart;
 	}
 
-	printf("Count of russian symbols: %d\n", ruSymbolsCount);
+	printf("Count of russian symbols: %I64u\n", ruSymbolsCount);
 
 	// Очищение памяти и закрытие описателей.
 	delete[] pointer1;
